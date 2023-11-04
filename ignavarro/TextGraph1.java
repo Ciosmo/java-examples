@@ -1,0 +1,54 @@
+package com.ignavarro;
+
+public class TextGraph1{
+
+  private char canvas[][];
+  
+  public TextGraph1(int cols, int rows){
+    canvas = new char[rows][cols];
+    clear();
+ }
+  private void clear(){
+    for(int r=0; r<canvas.length;r++){
+      for(int c=0; c<canvas[r].length; c++)
+         canvas[r][c] = ' ';   
+    }
+  }
+  
+   public void setCharAt(int col, int row, char value){
+      if((col<0) || (col >= canvas[0].length) || (row<0 ) || (row >= canvas.length))
+         return;
+      canvas[row][col] = value;
+   }
+
+    public void rectangle(int x, int y, int width, int height){
+       for(int row=y; row<(y+height); row++){
+        setCharAt(x, row, '|');
+        setCharAt(x+width, row, '|');
+       }
+       for(int col=x; col<(x+width); col++){
+         setCharAt(col, y, '-');
+         setCharAt(col, y+height, '-');
+       }
+       setCharAt(x, y, '+');
+       setCharAt(x+width,y,'+');
+       setCharAt(x, y+height, '+');
+       setCharAt(x+width, y+height, '+');
+    }
+    public void println(){
+ 	for(int row=0; row<canvas.length; row++)
+             System.out.println(canvas[row]);
+        System.out.println(); 
+    }
+    public static void main(String[]args){
+       TextGraph1 graph= new TextGraph1(80,25);
+       graph.rectangle(0,0,79,24);
+       for(int x=0; x<80; x++){
+ 	 double value = Math.sin(Math.toRadians((2*360.0/80)*x));
+	 value *=10;
+ 	 graph.setCharAt(x, (int)(12-value), 'x');
+       }
+	
+       graph.println();
+    }
+}
